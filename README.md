@@ -33,6 +33,7 @@
 ```
 git clone https://github.com/kerszl/VMBreaker.git
 cd VMBreaker
+chmod +x ./install.sh
 ./install.sh
 ```
 ## Usage
