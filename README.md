@@ -47,7 +47,7 @@ The project utilizes the following tools:
 - [Ffuf (Fuzz Faster U Fool)](https://github.com/ffuf/ffuf) - A fast web fuzzer.
 - [File](http://darwinsys.com/file/) - A file type determination tool.
 - [Hashcat](https://hashcat.net/hashcat/) - A password recovery tool.
-- [Haiti](https://github.com/Northern-Lights/haiti) - A hash type identifier.
+- [Haiti](https://noraj.github.io/haiti/) - A hash type identifier.
 - [Hydra](https://github.com/vanhauser-thc/thc-hydra) - A very fast network logon cracker.
 - [John the Ripper](https://www.openwall.com/john/) - A password cracker.
 - [Nc (Netcat)](http://nc110.sourceforge.net/) - A networking utility for reading from and writing to network connections.
