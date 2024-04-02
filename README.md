@@ -52,7 +52,7 @@ The project utilizes the following tools:
 - [John the Ripper](https://www.openwall.com/john/) - A password cracker.
 - [Nc (Netcat)](http://nc110.sourceforge.net/) - A networking utility for reading from and writing to network connections.
 - [Netdiscover](https://github.com/alexxy/netdiscover) - An active/passive address reconnaissance tool.
-- [Netexec](https://github.com) - Please note, specific information for Netexec was not found. Make sure to link to the correct tool.
+- [Netexec](https://github.com/Pennyw0rth/NetExec) -  The Network Execution Tool.
 - [Nikto](https://github.com/sullo/nikto) - A web server scanner.
 - [Nmap](https://nmap.org/) - A network discovery and security auditing tool.
 - [Sqlmap](http://sqlmap.org/) - An automatic SQL injection and database takeover tool.
