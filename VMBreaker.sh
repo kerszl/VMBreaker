@@ -32,7 +32,7 @@
 
 NAMEPROGRAM="VMBreaker (by Kerszi/MindCrafters)"
 DATE="2024-04-02"
-VERSION="0.38"
+VERSION="0.38a"
 DESCRIPTION="This is a program for basic operations to break into a virtual machine."
 # Main variables - if you need before export like: export VARIABLE
 # IP=""
@@ -137,21 +137,63 @@ show_variables() {
     echo -e "\033[0;32mHC_HASH:\033[0m     $HC_HASH"
     echo -e "\033[0;32mJTR_HASH:\033[0m    $JTR_HASH"
     echo -e "\033[0;32mLPORT:\033[0m       $LPORT"
-    echo -e "\033[0;31mExample:\033[0m     # export IP=127.0.0.1"
 }
 
 show_verbose_variables() {
     echo "$NAMEPROGRAM version $VERSION"
-    echo -e "\033[0;32mIP:\033[0m          $IP # IP address or network to scan, useful when searching for a virtual machine."
-    echo -e "\033[0;32mHTTPPORT:\033[0m    $HTTPPORT # The HTTP port to scan."
-    echo -e "\033[0;32mDICTIONARY:\033[0m  $DICTIONARY # Dictionary for scanning purposes."
-    echo -e "\033[0;32mPATH_SUFFIX:\033[0m $PATH_SUFFIX # Path suffix for the website."
-    echo -e "\033[0;32mFILE:\033[0m        $FILE # File to analyze."
-    echo -e "\033[0;32mUSERNAME:\033[0m    $USERNAME # Username for scanning the website."
-    echo -e "\033[0;32mHC_HASH:\033[0m     $HC_HASH # Hashcat hash - a hash also get by the program."
-    echo -e "\033[0;32mJTR_HASH:\033[0m    $JTR_HASH # John the Ripper hash - a hash also get by the program."
-    echo -e "\033[0;32mLPORT:\033[0m       $LPORT # Listening port for reverse shell."
-    echo -e "\033[0;31mExample:\033[0m      # export IP=127.0.0.1"
+    if [[ -z "$IP" ]]; then    
+        echo -e "\033[0;32mIP:\033[0m          IP address or network to scan, useful when searching for a virtual machine."
+    else
+        echo -e "\033[0;32mIP:\033[0m          $IP"
+    fi
+
+    if [[ -z "$HTTPPORT" ]]; then
+        echo -e "\033[0;32mHTTPPORT:\033[0m    HTTP port to scan."
+    else
+        echo -e "\033[0;32mHTTPPORT:\033[0m    $HTTPPORT"
+    fi
+
+    if [[ -z "$DICTIONARY" ]]; then
+        echo -e "\033[0;32mDICTIONARY:\033[0m  Dictionary for scanning purposes."
+    else
+        echo -e "\033[0;32mDICTIONARY:\033[0m  $DICTIONARY"
+    fi
+
+    if [[ -z "$PATH_SUFFIX" ]]; then
+        echo -e "\033[0;32mPATH_SUFFIX:\033[0m Path suffix for the website."
+    else
+        echo -e "\033[0;32mPATH_SUFFIX:\033[0m $PATH_SUFFIX"
+    fi
+
+    if [[ -z "$FILE" ]]; then
+        echo -e "\033[0;32mFILE:\033[0m        File to analyze."
+    else
+        echo -e "\033[0;32mFILE:\033[0m        $FILE"
+    fi
+
+    if [[ -z "$USERNAME" ]]; then
+        echo -e "\033[0;32mUSERNAME:\033[0m    Username for scanning the website."
+    else
+        echo -e "\033[0;32mUSERNAME:\033[0m    $USERNAME"
+    fi
+
+    if [[ -z "$HC_HASH" ]]; then
+        echo -e "\033[0;32mHC_HASH:\033[0m     Hashcat hash - a hash also get by the program."
+    else
+        echo -e "\033[0;32mHC_HASH:\033[0m     $HC_HASH"
+    fi
+
+    if [[ -z "$JTR_HASH" ]]; then
+        echo -e "\033[0;32mJTR_HASH:\033[0m    John the Ripper hash - a hash also get by the program."
+    else
+        echo -e "\033[0;32mJTR_HASH:\033[0m    $JTR_HASH"
+    fi
+
+    if [[ -z "$LPORT" ]]; then
+        echo -e "\033[0;32mLPORT:\033[0m       Listening port for reverse shell."
+    else
+        echo -e "\033[0;32mLPORT:\033[0m       $LPORT"
+    fi    
 }
 
 
@@ -170,6 +212,8 @@ done
 # Check if the IP environment variable is set
 if [ -z "${IP+x}" ]; then
     echo "The 'IP' variable is not exported or is empty."
+    echo "Example for IP      : export IP=127.0.0.1"    
+    echo "Example for NETWORK : export IP=192.168.0.0"    
     exit 1
 fi
 
