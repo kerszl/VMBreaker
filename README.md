@@ -1,6 +1,6 @@
 # VMBreaker
 
-![VMBreaker Logo](link-do-obrazka)
+![obraz](https://github.com/kerszl/VMBreaker/assets/45152848/cead308e-4e78-474a-9982-e498e3187c61)
 
 **VMBreaker** - specialized tool for breaking into virtual machines, designed by Kerszi/MindCrafters. Aimed at security researchers and educational purposes, VMBreaker offers a streamlined approach to virtual machine penetration testing.
 
@@ -30,11 +30,37 @@
 **VMBreaker** is released under the GNU General Public License (GPL), version 3, or (at your option) any later version. It is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 
 ## Installation
-
-Instructions for installing VMBreaker.
-
+```
+git clone https://github.com/kerszl/VMBreaker.git
+cd VMBreaker
+./install.sh
+```
 ## Usage
 
 ```bash
 ./VMBreaker.sh [options]
+```
+## Options
+```
+-c Show required programs.
+-h, --help Show this help message.
+-v Show variable exported values.
+-vv Display detailed information about exported variable values (verbose mode).
+```
+
+## Contributions
+
+Contributions are welcome! Please read the contribution guidelines before submitting a pull request.
+
+## Greetings:
+
+- [HackMyVM](https://hackmyvm.eu/)
+- [Sekurak](https://sekurak.pl/) (Special greets for #CTF channel on Discord)
+- 大傻子的小圈子
+
+## Contact
+
+For any inquiries, please contact kerszi@protonmail.com
+
+
 
