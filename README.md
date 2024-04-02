@@ -36,6 +36,60 @@ cd VMBreaker
 chmod +x install.sh
 ./install.sh
 ```
+## Tools Used
+
+The project utilizes the following tools:
+
+- [Binwalk](https://github.com/ReFirmLabs/binwalk) - A tool for analyzing and extracting firmware images.
+- [Dirsearch](https://github.com/maurosoria/dirsearch) - A web path scanner.
+- [ExifTool](https://exiftool.org/) - A library and program to read, write, and edit meta information in files.
+- [Feroxbuster](https://github.com/epi052/feroxbuster) - A tool for content discovery on websites.
+- [Ffuf (Fuzz Faster U Fool)](https://github.com/ffuf/ffuf) - A fast web fuzzer.
+- [File](http://darwinsys.com/file/) - A file type determination tool.
+- [Hashcat](https://hashcat.net/hashcat/) - A password recovery tool.
+- [Haiti](https://github.com/Northern-Lights/haiti) - A hash type identifier.
+- [Hydra](https://github.com/vanhauser-thc/thc-hydra) - A very fast network logon cracker.
+- [John the Ripper](https://www.openwall.com/john/) - A password cracker.
+- [Nc (Netcat)](http://nc110.sourceforge.net/) - A networking utility for reading from and writing to network connections.
+- [Netdiscover](https://github.com/alexxy/netdiscover) - An active/passive address reconnaissance tool.
+- [Netexec](https://github.com) - Please note, specific information for Netexec was not found. Make sure to link to the correct tool.
+- [Nikto](https://github.com/sullo/nikto) - A web server scanner.
+- [Nmap](https://nmap.org/) - A network discovery and security auditing tool.
+- [Sqlmap](http://sqlmap.org/) - An automatic SQL injection and database takeover tool.
+- [Stegoveritas](https://github.com/bannsec/stegoVeritas) - A tool for steganography analysis.
+- [Stegseek](https://github.com/RickdeJager/stegseek) - A lightning-fast steghide cracker.
+- [Wapiti](https://github.com/IFGHou/wapiti) - A web application vulnerability scanner.
+- [WhatWeb](https://github.com/urbanadventurer/WhatWeb) - A web scanner to identify what websites are running.
+- [WPScan](https://wpscan.org/) - A WordPress security scanner.
+- [Zsteg](https://github.com/zed-0xff/zsteg) - A tool for detecting steganographic content in PNG and BMP files.
+
+## Check installed tools
+```
+VMBreaker -c
+
+binwalk: installed
+dirsearch: installed
+exiftool: installed
+feroxbuster: installed
+ffuf: installed
+file: installed
+hashcat: installed
+haiti: installed
+hydra: installed
+john: installed
+nc: installed
+netdiscover: installed
+netexec: installed
+nikto: installed
+nmap: installed
+sqlmap: installed
+stegoveritas: installed
+stegseek: installed
+wapiti: installed
+whatweb: installed
+wpscan: installed
+zsteg: installed
+```
 ## Usage
 
 ```bash
