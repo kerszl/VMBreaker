@@ -32,7 +32,7 @@
 
 NAMEPROGRAM="VMBreaker (by Kerszi/MindCrafters)"
 DATE="2024-04-03"
-VERSION="0.38a1"
+VERSION="0.38a2"
 DESCRIPTION="This is a program for basic operations to break into a virtual machine."
 # Main variables - if you need before export like: export VARIABLE
 # IP=""
@@ -257,20 +257,74 @@ get_info
 
 # Functions for submenus
 
+
 submenu1() {
-    NETWORK=$(echo $IP |  sed 's/\.[0-9]*$/.0/')
-    COMMAND="netdiscover -P -r $NETWORK"
-    run_program_green "$COMMAND"        
+    exec 3>&1
+    selection=$(dialog \
+        --clear \
+        --title "Netdiscover Scan" \
+        --menu "Choose an action:" 12 50 1 \
+        1 "Start Netdiscover Scan" \
+        2>&1 1>&3)    
+    exec 3>&- 
+    case $selection in
+        1)
+            IP=$(hostname -I | awk '{print $1}') 
+            NETWORK=$(echo $IP | sed 's/\.[0-9]*$/.0/')
+            COMMAND="netdiscover -P -r $NETWORK" 
+            run_program_green "$COMMAND"
+            ;;
+    esac
 }
 
+
 submenu2() {
-    COMMAND="nmap -A -p- $IP"
-    run_program_green "$COMMAND"    
+    exec 3>&1
+    selection=$(dialog \
+        --clear \
+        --title "Nmap scan" \
+        --menu "Choose an action:" 12 50 1 \
+        1 "Start Nmap fast scan" \
+        2 "Start Nmap verbose scan" \
+        3 "Start Nmap UDP scan" \
+        2>&1 1>&3)
+    exec 3>&-
+    case $selection in
+        1)
+            COMMAND="nmap $IP"
+            run_program_green "$COMMAND"
+            ;;
+        2)
+            COMMAND="nmap -A -p- $IP"
+            run_program_green "$COMMAND"
+            ;;
+        3)
+            COMMAND="nmap -sU -p- $IP"
+            run_program_green "$COMMAND"
+            ;;
+    esac
 }
 
 submenu3() {
-    COMMAND="whatweb -v $IP:$HTTPPORT"
-    run_program_green "$COMMAND"
+    exec 3>&1
+    selection=$(dialog \
+        --clear \
+        --title "Whatweb Check" \
+        --menu "Choose an action:" 12 50 1 \
+        1 "Whatweb simply" \
+        2 "Whatweb verbose" \
+        2>&1 1>&3)
+    exec 3>&-
+    case $selection in
+        1)
+            COMMAND="whatweb $IP:$HTTPPORT"
+            run_program_green "$COMMAND"
+            ;;
+        2)
+            COMMAND="whatweb -v $IP:$HTTPPORT"
+            run_program_green "$COMMAND"
+            ;;
+    esac
 }
 
 submenu4() {
@@ -630,7 +684,6 @@ run_program_green_no_exit() {
 }
 
 
-
 # Main program loop
 while true; do
     exec 3>&1
@@ -640,9 +693,9 @@ while true; do
         --clear \
         --cancel-label "Exit" \
         --menu "$info" 21 60 10 \
-        "1" "Netdiscover" \
-        "2" "Nmap" \
-        "3" "Whatweb" \
+        "1" "IP search tool" \
+        "2" "Port Scan tool" \
+        "3" "HTTP info tool" \
         "4" "HTTP Scanning (DIR)" \
         "5" "Vulnerability Search" \
         "6" "Cracking Service" \
