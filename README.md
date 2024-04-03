@@ -1,7 +1,5 @@
 # VMBreaker
-
-![VMBreaker](https://github.com/kerszl/VMBreaker/assets/45152848/9cab2c6b-59c0-48bf-a312-def06b0f7d52)
-
+![obraz](https://github.com/kerszl/VMBreaker/assets/45152848/f8a1408f-86bc-4963-b1f9-bf5f0f978384)
 **VMBreaker** - specialized tool for breaking into virtual machines, designed by Kerszi/MindCrafters. Aimed at security researchers and educational purposes, VMBreaker offers a streamlined approach to virtual machine penetration testing.
 
 ## Overview
