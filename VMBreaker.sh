@@ -32,7 +32,7 @@
 
 NAMEPROGRAM="VMBreaker (by Kerszi/MindCrafters)"
 DATE="2024-04-03"
-VERSION="0.38a3"
+VERSION="0.38a4"
 DESCRIPTION="This is a program for basic operations to break into a virtual machine."
 # Main variables - if you need before export like: export VARIABLE
 # IP=""
@@ -394,6 +394,7 @@ submenu5() {
         "C" "Wpscan (aggressive)" \
         "D" "Sqlmap (all)" \
         "E" "Sqlmap (REQUESTFILE)" \
+        "F" "Sqlmap (Only steps)" \
         2>&1 1>&3)
     case $selection in
         "A")
@@ -421,7 +422,15 @@ export FILE=[Name of file]" 10 50;
             COMMAND="sqlmap -r $FILE --threads 10 --batch --dbs"                        
             run_program_green "$COMMAND"
         fi
-            ;;                        
+            ;;
+        "F")
+        clear
+        echo "sqlmap -r $FILE --threads 10 --batch --dbs"
+        echo "sqlmap -r $FILE --threads 10 --batch -D BaseName --tables"
+        echo "sqlmap -r $FILE --threads 10 --batch -D BaseName -T TableName --columns"
+        echo "sqlmap -r $FILE --threads 10 --batch -D BaseName -T TableName -C ColumName1, ColumName2 --dump"
+        exit
+        ;;
     esac
 }
 
@@ -675,8 +684,6 @@ urlencode() {
         esac
     done
 }
-
-
 
 run_program_green() {
     COMMAND=$1
