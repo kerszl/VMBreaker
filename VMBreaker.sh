@@ -31,8 +31,8 @@
 # HackMyVM, Sekurak, 大傻子的小圈子 
 
 NAMEPROGRAM="VMBreaker (by Kerszi/MindCrafters)"
-DATE="2024-04-02"
-VERSION="0.38a"
+DATE="2024-04-03"
+VERSION="0.38a1"
 DESCRIPTION="This is a program for basic operations to break into a virtual machine."
 # Main variables - if you need before export like: export VARIABLE
 # IP=""
@@ -256,55 +256,31 @@ info="IP:          $IP   HTTPPORT: $HTTPPORT LPORT: $LPORT\nUSERNAME:    $USERNA
 get_info
 
 # Functions for submenus
+
 submenu1() {
-    exec 3>&1
-    selection=$(dialog --backtitle "Submenu 1" \
-                       --title "Dictionary selection" \
-                       --menu "Choose one dictionary:" 13 50 5 \
-                       "1" "None" \
-                       "2" "Rockyou.txt" \
-                       "3" "10-million-password-list-top-10000.txt" \
-                       "4" "directory-list-2.3-medium.txt" \
-                       "5" "LFI-gracefulsecurity-linux.txt" \
-                       "6" "quick-SQLi.txt" \
-                       2>&1 1>&3)
-    case $selection in
-        1) unset DICTIONARY;;
-        2) DICTIONARY="/usr/share/wordlists/rockyou.txt";;         
-        3) DICTIONARY="/usr/share/seclists/Passwords/Common-Credentials/10-million-password-list-top-10000.txt";; 
-        4) DICTIONARY="/usr/share/seclists/Discovery/Web-Content/directory-list-2.3-medium.txt";;        
-        5) DICTIONARY="/usr/share/seclists/Fuzzing/LFI/LFI-gracefulsecurity-linux.txt";;
-        6) DICTIONARY="/usr/share/wordlists/seclists/Fuzzing/SQLi/quick-SQLi.txt";;
-
-    esac
-        DICTIONARY_=$(basename "$DICTIONARY")
-        get_info
-}
-
-submenu2() {
     NETWORK=$(echo $IP |  sed 's/\.[0-9]*$/.0/')
     COMMAND="netdiscover -P -r $NETWORK"
     run_program_green "$COMMAND"        
 }
 
-submenu3() {
+submenu2() {
     COMMAND="nmap -A -p- $IP"
     run_program_green "$COMMAND"    
 }
 
-submenu4() {
+submenu3() {
     COMMAND="whatweb -v $IP:$HTTPPORT"
     run_program_green "$COMMAND"
 }
 
-submenu5() {
+submenu4() {
     exec 3>&1
     selection=$(dialog \
         --menu "Choose an action:" 12 50 2 \
-        "A" "dirsearch" \
-        "B" "feroxbuster" \
-        "C" "ffuf (WORDLIST)" \
-        "D" "ffuf (PAR+WORDLIST)" \
+        "A" "Dirsearch" \
+        "B" "Feroxbuster" \
+        "C" "Ffuf (WORDLIST)" \
+        "D" "Ffuf (PAR+WORDLIST)" \
         2>&1 1>&3)
 case $selection in
     "A")
@@ -356,14 +332,14 @@ case $selection in
 esac
 }
 
-submenu6() {
+submenu5() {
     exec 3>&1
     selection=$(dialog \
         --menu "Choose an action:" 11 50 4 \
-        "A" "nikto" \
-        "B" "wapiti" \
-        "C" "wpscan (aggressive)" \
-        "D" "sqlmap (all)" \
+        "A" "Nikto" \
+        "B" "Wapiti" \
+        "C" "Wpscan (aggressive)" \
+        "D" "Sqlmap (all)" \
         2>&1 1>&3)
     case $selection in
         "A")
@@ -386,17 +362,17 @@ submenu6() {
     esac
 }
 
-submenu7() {
+submenu6() {
     exec 3>&1
     selection=$(dialog \
         --menu "Choose an action:" 14 50 7 \
-        "A" "hydra - ftp" \
-        "B" "hydra - http-get" \
-        "C" "hydra - http-post" \
-        "D" "hydra - mysql" \
-        "E" "hydra - postgres" \
-        "F" "netexec - samba" \
-        "G" "hydra - ssh" \
+        "A" "Hydra - ftp" \
+        "B" "Hydra - http-get" \
+        "C" "Hydra - http-post" \
+        "D" "Hydra - mysql" \
+        "E" "Hydra - postgres" \
+        "F" "Netexec - samba" \
+        "G" "Hydra - ssh" \
         2>&1 1>&3)
     case $selection in
         "A")            
@@ -434,15 +410,15 @@ submenu7() {
     esac
 }
 
-submenu8() {
+submenu7() {
     
     exec 3>&1
     selection=$(dialog \
         --menu "Choose an action:" 12 50 4 \
-        "A" "HAITI (exit)" \
+        "A" "HAITI (run and exit)" \
         "B" "HAITI (get hash)" \
         "C" "John the Ripper" \
-        "D" "hashCat" \
+        "D" "HashCat" \
         2>&1 1>&3)
     case $selection in
         "A")
@@ -486,16 +462,16 @@ submenu8() {
 
 
 
-submenu9() {
+submenu8() {
     exec 3>&1
     selection=$(dialog \
         --menu "Choose an action:" 13 50 3 \
-        "A" "file" \
-        "B" "exiftool (all)" \
-        "C" "binwalk" \
-        "D" "stegseek (jpg)" \
-        "E" "zsteg (png)" \
-        "F" "stegoveritas (all)" \
+        "A" "File" \
+        "B" "Exiftool (all)" \
+        "C" "Binwalk" \
+        "D" "Stegseek (jpg)" \
+        "E" "Zsteg (png)" \
+        "F" "Stegoveritas (all)" \
         2>&1 1>&3)
     case $selection in
         "A")
@@ -527,14 +503,14 @@ submenu9() {
     esac
 }
 
-submenu10() {
+submenu9() {
     LOCALIP=$(get_first_up_interface_ip)
     exec 3>&1
     selection=$(dialog \
         --menu "Choose an action for Reverse Shell:" 12 50 3 \
         "1" "Start reverse shell listener" \
         "2" "Enhance reverse shell session" \
-        "3" "Popular Reverse Shell Connections" \
+        "3" "Popular reverse shell connections" \
         2>&1 1>&3)
 
     case $selection in
@@ -600,6 +576,32 @@ submenu10() {
     esac
 }
 
+submenuA() {
+    exec 3>&1
+    selection=$(dialog --backtitle "Submenu 1" \
+                       --title "Dictionary selection" \
+                       --menu "Choose one dictionary:" 13 50 5 \
+                       "1" "None" \
+                       "2" "Rockyou.txt" \
+                       "3" "10-million-password-list-top-10000.txt" \
+                       "4" "directory-list-2.3-medium.txt" \
+                       "5" "LFI-gracefulsecurity-linux.txt" \
+                       "6" "quick-SQLi.txt" \
+                       2>&1 1>&3)
+    case $selection in
+        1) unset DICTIONARY;;
+        2) DICTIONARY="/usr/share/wordlists/rockyou.txt";;         
+        3) DICTIONARY="/usr/share/seclists/Passwords/Common-Credentials/10-million-password-list-top-10000.txt";; 
+        4) DICTIONARY="/usr/share/seclists/Discovery/Web-Content/directory-list-2.3-medium.txt";;        
+        5) DICTIONARY="/usr/share/seclists/Fuzzing/LFI/LFI-gracefulsecurity-linux.txt";;
+        6) DICTIONARY="/usr/share/wordlists/seclists/Fuzzing/SQLi/quick-SQLi.txt";;
+
+    esac
+        DICTIONARY_=$(basename "$DICTIONARY")
+        get_info
+}
+
+
 urlencode() {
     local length="${#1}"
     for (( i = 0; i < length; i++ )); do
@@ -638,16 +640,16 @@ while true; do
         --clear \
         --cancel-label "Exit" \
         --menu "$info" 21 60 10 \
-        "1" "Dictionaries" \
-        "2" "netdiscover" \
-        "3" "nmap" \
-        "4" "whatweb" \
-        "5" "HTTP Scanning (DIR)" \
-        "6" "Vulnerability Search" \
-        "7" "Cracking Service" \
-        "8" "Cracking Hash" \
-        "9" "Steg" \
-        "A" "Reverse Shell" \
+        "1" "Netdiscover" \
+        "2" "Nmap" \
+        "3" "Whatweb" \
+        "4" "HTTP Scanning (DIR)" \
+        "5" "Vulnerability Search" \
+        "6" "Cracking Service" \
+        "7" "Cracking Hash" \
+        "8" "Steg" \
+        "9" "Reverse Shell" \
+        "A" "Dictionaries" \
         2>&1 1>&3)
     case $selection in
         1) submenu1 ;;
@@ -655,29 +657,35 @@ while true; do
         3) submenu3 ;;
         4) submenu4 ;;
         5) submenu5 ;;
-        6) submenu6 ;;
-        7) if [[ -z "${USERNAME+x}" || -z "${DICTIONARY+x}" ]]; then  
-           dialog --title "Error" --msgbox "The variables USERNAME and DICTIONARY cannot be empty." 10 50; 
-           else submenu7
+        6) if [[ -z "${USERNAME+x}" || -z "${DICTIONARY+x}" ]]; then  
+           dialog --title "Error" --msgbox "The variables USERNAME and DICTIONARY cannot be empty.\n\
+export USERNAME=[Name of user]\nexport DICTIONARY=[Name of dictionary] or\n\
+chose Dictionaries" 10 50; 
+           else submenu6
            fi
            ;;
-        8) if [[ -z "${FILE+x}" || -z "${DICTIONARY+x}" ]]; then  
-           dialog --title "Error" --msgbox "The variables FILE and DICTIONARY cannot be empty." 10 50; 
-           else submenu8
+        7) if [[ -z "${FILE+x}" || -z "${DICTIONARY+x}" ]]; then  
+           dialog --title "Error" --msgbox "The variables FILE and DICTIONARY cannot be empty.\n\
+export FILE=[Name of file]\nexport DICTIONARY=[Name of dictionary] or\n\
+chose Dictionaries" 10 50; 
+           else submenu7
            fi
            ;; 
-        9) if [ -z "${FILE+x}" ]; then
-           dialog --title "Error" --msgbox "The variable FILE cannot be empty." 10 50; 
-           else submenu9;
+        8) if [ -z "${FILE+x}" ]; then
+           dialog --title "Error" --msgbox "The variable FILE cannot be empty.\n\
+export FILE=[Name of file]" 10 50; 
+           else submenu8;
            fi
            ;; 
-        A) 
-           if [ -z "${LPORT+x}" ]; then
-           dialog --title "Error" --msgbox "export LPORT=[Listen Port]" 10 50; 
+        9) 
+           if [ -z "${LPORT+x}" ]; then           
+           dialog --title "Error" --msgbox "The variable LPORT cannot be empty.\n\
+export LPORT=[Listen Port]" 10 50; 
            else
-           submenu10
+           submenu9
            fi
-           ;;           
+           ;;
+        A) submenuA ;;
         *)
             clear
             exit 0
