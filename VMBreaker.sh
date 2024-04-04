@@ -31,8 +31,8 @@
 # HackMyVM, Sekurak, 大傻子的小圈子 
 
 NAMEPROGRAM="VMBreaker (by Kerszi/MindCrafters)"
-DATE="2024-04-03"
-VERSION="0.38a4"
+DATE="2024-04-04"
+VERSION="0.38a5"
 DESCRIPTION="This is a program for basic operations to break into a virtual machine."
 # Main variables - if you need before export like: export VARIABLE
 # IP=""
@@ -87,6 +87,7 @@ get_first_up_interface_ip() {
 
     echo "$ip"
 }
+
 
 # Colors
 print_color() {
@@ -211,11 +212,12 @@ done
 # Check if the IP environment variable is set
 if [ -z "${IP+x}" ]; then
     echo "The 'IP' variable is not exported or is empty."
-    echo "Example for IP      : export IP=127.0.0.1"    
-    echo "Example for NETWORK : export IP=192.168.0.0"    
+    echo "Example for IP      : export IP=127.0.0.1"
+    NETWORK_TMP=$(get_first_up_interface_ip)
+    NETWORK_TMP=$(echo $NETWORK_TMP | sed 's/\.[0-9]*$/.0/')
+    echo "Example for NETWORK : export IP=$NETWORK_TMP"
     exit 1
 fi
-
 
 if [ ! -z "${PATH_SUFFIX+x}" ]; then
 
@@ -388,7 +390,7 @@ esac
 submenu5() {
     exec 3>&1
     selection=$(dialog \
-        --menu "Choose an action:" 12 50 6 \
+        --menu "Choose an action:" 13 50 6 \
         "A" "Nikto" \
         "B" "Wapiti" \
         "C" "Wpscan (aggressive)" \
@@ -426,9 +428,9 @@ export FILE=[Name of file]" 10 50;
         "F")
         clear
         echo "sqlmap -r $FILE --threads 10 --batch --dbs"
-        echo "sqlmap -r $FILE --threads 10 --batch -D BaseName --tables"
-        echo "sqlmap -r $FILE --threads 10 --batch -D BaseName -T TableName --columns"
-        echo "sqlmap -r $FILE --threads 10 --batch -D BaseName -T TableName -C ColumName1, ColumName2 --dump"
+        echo "sqlmap -r $FILE --threads 10 --batch -D DB --tables"
+        echo "sqlmap -r $FILE --threads 10 --batch -D DB -T TBL --columns"
+        echo "sqlmap -r $FILE --threads 10 --batch -D DB -T TBL -C COL1, COL2 --dump"
         exit
         ;;
     esac
@@ -530,8 +532,6 @@ submenu7() {
             ;;
     esac
 }
-
-
 
 
 submenu8() {
