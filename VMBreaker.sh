@@ -89,7 +89,6 @@ get_first_up_interface_ip() {
     echo "$ip"
 }
 
-
 # Colors
 print_color() {
   if [ "$1" = "0" ]; then
