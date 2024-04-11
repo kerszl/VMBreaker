@@ -31,8 +31,8 @@
 # HackMyVM, Sekurak, 大傻子的小圈子 
 
 NAMEPROGRAM="VMBreaker (by Kerszi/MindCrafters)"
-DATE="2024-04-04"
-VERSION="0.38a5"
+DATE="2024-04-11"
+VERSION="0.39"
 DESCRIPTION="This is a program for basic operations to break into a virtual machine."
 # Main variables - if you need before export like: export VARIABLE
 # IP=""
@@ -59,6 +59,7 @@ programs=(
   netexec
   nikto
   nmap
+  searchsploit
   sqlmap
   stegoveritas
   stegseek
@@ -137,6 +138,7 @@ show_variables() {
     echo -e "\033[0;32mHC_HASH:\033[0m     $HC_HASH"
     echo -e "\033[0;32mJTR_HASH:\033[0m    $JTR_HASH"
     echo -e "\033[0;32mLPORT:\033[0m       $LPORT"
+    echo -e "\033[0;32mEXPLOIT:\033[0m     $EXPLOIT"    
 }
 
 show_verbose_variables() {
@@ -194,6 +196,12 @@ show_verbose_variables() {
     else
         echo -e "\033[0;32mLPORT:\033[0m       $LPORT"
     fi    
+    if [[ -z "$EXPLOIT" ]]; then
+        echo -e "\033[0;32mEXPLOIT:\033[0m       Name of exploit."
+    else
+        echo -e "\033[0;32mEXPLOIT:\033[0m       $EXPLOIT"
+    fi    
+
 }
 
 
@@ -251,7 +259,7 @@ fi
 
 # IP and host information
 get_info () {
-info="IP:          $IP   HTTPPORT: $HTTPPORT LPORT: $LPORT\nUSERNAME:    $USERNAME   HC_HASH: $HC_HASH JTR_HASH: $JTR_HASH\nDICTIONARY:  $DICTIONARY\nPATH_SUFFIX: $PATH_SUFFIX\nFILE:        $FILE"
+info="IP:          $IP   HTTPPORT: $HTTPPORT LPORT: $LPORT\nUSERNAME:    $USERNAME   HC_HASH: $HC_HASH JTR_HASH: $JTR_HASH\nDICTIONARY:  $DICTIONARY\nPATH_SUFFIX: $PATH_SUFFIX\nFILE:        $FILE\nEXPLOIT:     $EXPLOIT"
 }
 
 get_info
@@ -604,7 +612,7 @@ submenu9() {
             echo -e "\e[90m# 5. Reset the terminal emulation to xterm:\e[0m"
             echo -e "\e[32m   reset xterm\e[0m"
             echo -e "\e[90m# 6. Adjust terminal rows and columns:\e[0m"
-            echo -e "\e[32m   stty rows 44 columns 185\e[0m"
+            echo -e "\e[32m   stty rows 44 columns 110\e[0m"
             echo -e "\e[90m# 7. Source the bashrc file to get a fully functional bash environment:\e[0m"
             echo -e "\e[32m   source /etc/skel/.bashrc\e[0m"
             echo -e "\e[90m# 8. Export SHELL environment variable as bash:\e[0m"
@@ -673,6 +681,45 @@ submenuA() {
         get_info
 }
 
+submenuB() {
+    exec 3>&1
+    selection=$(dialog --backtitle "submenu1" \
+                       --title "Exploits" \
+                       --menu "Choose one dictionary:" 12 50 5 \
+                       "1" "Searchsploit" \
+                       "2" "https://exploit-db.com" \
+                       "3" "https://www.rapid7.com" \
+                       "4" "https://book.hacktricks.xyz" \
+                       "5" "Github:PayloadsAllTheThings" \
+                       2>&1 1>&3)
+    case $selection in
+        1) 
+            clear
+            echo -e "searchsploit $EXPLOIT"
+            exit
+        ;;
+        2) 
+            clear
+            echo -e "https://www.exploit-db.com/search?q=$EXPLOIT"
+            exit
+        ;;
+        3)
+            clear
+            echo -e "https://www.rapid7.com/search/?q=$EXPLOIT"
+            exit
+        ;;
+        4)
+            clear
+            echo -e "https://book.hacktricks.xyz/?q=$EXPLOIT"
+            exit
+        ;;
+        5)
+            clear
+            echo -e "https://github.com/search?q=repo%3Aswisskyrepo%2FPayloadsAllTheThings+$EXPLOIT&type=commits"
+            exit
+        ;;
+    esac
+}
 
 urlencode() {
     local length="${#1}"
@@ -719,6 +766,7 @@ while true; do
         "8" "Steg" \
         "9" "Reverse Shell" \
         "A" "Dictionaries" \
+        "B" "Exploits" \
         2>&1 1>&3)
     case $selection in
         1) submenu1 ;;
@@ -755,9 +803,17 @@ export LPORT=[Listen Port]" 10 50;
            fi
            ;;
         A) submenuA ;;
+        B) 
+           if [ -z "${EXPLOIT+x}" ]; then           
+           dialog --title "Error" --msgbox "The variable EXPLOIT cannot be empty.\n\
+export EXPLOIT=[Exploit name]" 10 50;           
+           else
+           submenuB
+           fi
+           ;;
         *)
             clear
             exit 0
-            ;;
+            ;;           
     esac
 done
