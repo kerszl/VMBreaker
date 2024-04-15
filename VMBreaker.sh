@@ -32,7 +32,7 @@
 
 NAMEPROGRAM="VMBreaker (by Kerszi/MindCrafters)"
 DATE="2024-04-15"
-VERSION="0.39a1"
+VERSION="0.39a2"
 DESCRIPTION="This is a program for basic operations to break into a virtual machine."
 # Main variables - if you need before export like: export VARIABLE
 # IP=""
@@ -754,7 +754,7 @@ while true; do
         --title "" \
         --clear \
         --cancel-label "Exit" \
-        --menu "$info" 21 60 12 \
+        --menu "$info" 23 60 12 \
         "1" "IP search tool" \
         "2" "Port Scan tool" \
         "3" "HTTP info tool" \
