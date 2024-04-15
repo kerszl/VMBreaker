@@ -32,7 +32,7 @@
 
 NAMEPROGRAM="VMBreaker (by Kerszi/MindCrafters)"
 DATE="2024-04-15"
-VERSION="0.39a3"
+VERSION="0.39a4"
 DESCRIPTION="This is a program for basic operations to break into a virtual machine."
 # Main variables - if you need before export like: export VARIABLE
 # IP=""
@@ -776,14 +776,14 @@ while true; do
         --cancel-label "Exit" \
         --menu "$info" 23 60 12 \
         "1" "IP search tool" \
-        "2" "Port Scan tool" \
+        "2" "Port scan tool" \
         "3" "HTTP info tool" \
-        "4" "HTTP Scanning (DIR)" \
-        "5" "Vulnerability Search" \
-        "6" "Cracking Service" \
-        "7" "Cracking Hash" \
+        "4" "HTTP scanning (DIR)" \
+        "5" "Vulnerability search" \
+        "6" "Cracking services" \
+        "7" "Cracking hash" \
         "8" "Steg" \
-        "9" "Reverse Shell" \
+        "9" "Reverse shell" \
         "A" "Dictionaries" \
         "B" "Exploits" \
         2>&1 1>&3)
