@@ -31,8 +31,8 @@
 # HackMyVM, Sekurak, 大傻子的小圈子 
 
 NAMEPROGRAM="VMBreaker (by Kerszi/MindCrafters)"
-DATE="2024-04-11"
-VERSION="0.39"
+DATE="2024-04-15"
+VERSION="0.39a1"
 DESCRIPTION="This is a program for basic operations to break into a virtual machine."
 # Main variables - if you need before export like: export VARIABLE
 # IP=""
@@ -341,8 +341,8 @@ submenu4() {
         --menu "Choose an action:" 12 50 2 \
         "A" "Dirsearch" \
         "B" "Feroxbuster" \
-        "C" "Ffuf (WORDLIST)" \
-        "D" "Ffuf (PAR+WORDLIST)" \
+        "C" "Ffuf (p1=WORDLIST;[POST])" \
+        "D" "Ffuf (p1=USERNAME,p2=WORDLIST;[POST])" \
         2>&1 1>&3)
 case $selection in
     "A")
@@ -375,9 +375,9 @@ case $selection in
         if [[ -z "${DICTIONARY}" ]]; then  
            dialog --title "Error" --msgbox "The variable DICTIONARY cannot be empty." 10 50; 
            else 
-            COMMAND='ffuf -H "Content-Type: application/x-www-form-urlencoded" -w '"$DICTIONARY"':PARAM -d "username=PARAM" -u http://'"$IP"':'"$HTTPPORT"''"$PATH_SUFFIX"' -ac'
+            COMMAND='ffuf -H "Content-Type: application/x-www-form-urlencoded" -w '"$DICTIONARY"':PARAM -d "p1=PARAM" -u http://'"$IP"':'"$HTTPPORT"''"$PATH_SUFFIX"' -ac'
             run_program_green_no_exit "$COMMAND"
-            ffuf -H "Content-Type: application/x-www-form-urlencoded" -w "$DICTIONARY":PARAM -d "username=PARAM" -u http://$IP:$HTTPPORT$PATH_SUFFIX
+            ffuf -H "Content-Type: application/x-www-form-urlencoded" -w "$DICTIONARY":PARAM -d "p1=PARAM" -u http://$IP:$HTTPPORT$PATH_SUFFIX -ac
             exit            
            fi
         ;;
@@ -385,9 +385,9 @@ case $selection in
         if [[ -z "${USERNAME}" || -z "${DICTIONARY}" ]]; then  
            dialog --title "Error" --msgbox "The variables USERNAME and DICTIONARY cannot be empty." 10 50; 
            else 
-            COMMAND='ffuf -H "Content-Type: application/x-www-form-urlencoded" -w '"$DICTIONARY"':PARAM -d "username='"$USERNAME"'&password=PARAM" -b "cookie here" -u http://'"$IP"':'"$HTTPPORT"''"$PATH_SUFFIX"' -ac'
+            COMMAND='ffuf -H "Content-Type: application/x-www-form-urlencoded" -w '"$DICTIONARY"':PARAM -d "p1='"$USERNAME"'&p2=PARAM" -b "cookie here" -u http://'"$IP"':'"$HTTPPORT"''"$PATH_SUFFIX"' -ac'
             run_program_green_no_exit "$COMMAND"
-            ffuf -H "Content-Type: application/x-www-form-urlencoded" -w $DICTIONARY:PARAM -d "username=$USERNAME&password=PARAM" -b "cookie here" -u http://$IP:$HTTPPORT$PATH_SUFFIX
+            ffuf -H "Content-Type: application/x-www-form-urlencoded" -w $DICTIONARY:PARAM -d "p1=$USERNAME&p2=PARAM" -b "cookie here" -u http://$IP:$HTTPPORT$PATH_SUFFIX
             exit            
            fi
         ;;
@@ -754,7 +754,7 @@ while true; do
         --title "" \
         --clear \
         --cancel-label "Exit" \
-        --menu "$info" 21 60 10 \
+        --menu "$info" 21 60 12 \
         "1" "IP search tool" \
         "2" "Port Scan tool" \
         "3" "HTTP info tool" \
