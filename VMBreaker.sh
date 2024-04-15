@@ -32,7 +32,7 @@
 
 NAMEPROGRAM="VMBreaker (by Kerszi/MindCrafters)"
 DATE="2024-04-15"
-VERSION="0.39a4"
+VERSION="0.39a5"
 DESCRIPTION="This is a program for basic operations to break into a virtual machine."
 # Main variables - if you need before export like: export VARIABLE
 # IP=""
@@ -47,7 +47,7 @@ programs=(
   binwalk
   dirsearch
   exiftool
-  feroxbuster  
+  feroxbuster
   ffuf
   file
   hashcat
@@ -271,7 +271,7 @@ submenu1() {
     selection=$(dialog \
         --clear \
         --title "Netdiscover Scan" \
-        --menu "Choose an action:" 12 50 1 \
+        --menu "Choose an Action:" 12 50 1 \
         1 "Start Netdiscover Scan" \
         2>&1 1>&3)    
     exec 3>&- 
@@ -290,11 +290,11 @@ submenu2() {
     exec 3>&1
     selection=$(dialog \
         --clear \
-        --title "Nmap scan" \
-        --menu "Choose an action:" 12 50 1 \
-        1 "Start Nmap fast scan" \
-        2 "Start Nmap verbose scan" \
-        3 "Start Nmap UDP scan" \
+        --title "Nmap Scan" \
+        --menu "Choose an Action:" 12 50 1 \
+        1 "Start Nmap Fast Scan" \
+        2 "Start Nmap Verbose Scan" \
+        3 "Start Nmap UDP Scan" \
         2>&1 1>&3)
     exec 3>&-
     case $selection in
@@ -318,9 +318,9 @@ submenu3() {
     selection=$(dialog \
         --clear \
         --title "Whatweb Check" \
-        --menu "Choose an action:" 12 50 1 \
-        1 "Whatweb simply" \
-        2 "Whatweb verbose" \
+        --menu "Choose an Action:" 12 50 1 \
+        1 "Whatweb Simply" \
+        2 "Whatweb Verbose" \
         2>&1 1>&3)
     exec 3>&-
     case $selection in
@@ -338,7 +338,7 @@ submenu3() {
 submenu4() {
     exec 3>&1
     selection=$(dialog \
-        --menu "Choose an action:" 12 50 2 \
+        --menu "Choose an Action:" 12 50 2 \
         "A" "Dirsearch" \
         "B" "Feroxbuster" \
         "C" "Ffuf (p1=WORDLIST;[POST])" \
@@ -397,13 +397,13 @@ esac
 submenu5() {
     exec 3>&1
     selection=$(dialog \
-        --menu "Choose an action:" 13 50 6 \
+        --menu "Choose an Action:" 13 50 6 \
         "A" "Nikto" \
         "B" "Wapiti" \
         "C" "Wpscan (aggressive)" \
         "D" "Sqlmap (all)" \
         "E" "Sqlmap (REQUESTFILE)" \
-        "F" "Sqlmap (Only steps)" \
+        "F" "Sqlmap (only steps)" \
         2>&1 1>&3)
     case $selection in
         "A")
@@ -446,14 +446,14 @@ export FILE=[Name of file]" 10 50;
 submenu6() {
     exec 3>&1
     selection=$(dialog \
-        --menu "Choose an action:" 14 50 7 \
-        "A" "Hydra - ftp" \
-        "B" "Hydra - http-get" \
-        "C" "Hydra - http-post" \
-        "D" "Hydra - mysql" \
-        "E" "Hydra - postgres" \
-        "F" "Netexec - samba" \
-        "G" "Hydra - ssh" \
+        --menu "Choose an Action:" 14 50 7 \
+        "A" "Hydra - FTP" \
+        "B" "Hydra - HTTP-GET" \
+        "C" "Hydra - HTTP-POST" \
+        "D" "Hydra - Mysql" \
+        "E" "Hydra - Postgres" \
+        "F" "Netexec - Samba" \
+        "G" "Hydra - SSH" \
         2>&1 1>&3)
     case $selection in
         "A")            
@@ -495,7 +495,7 @@ submenu7() {
     
     exec 3>&1
     selection=$(dialog \
-        --menu "Choose an action:" 12 50 4 \
+        --menu "Choose an Action:" 12 50 4 \
         "A" "HAITI (run and exit)" \
         "B" "HAITI (get hash)" \
         "C" "John the Ripper" \
@@ -544,7 +544,7 @@ submenu7() {
 submenu8() {
     exec 3>&1
     selection=$(dialog \
-        --menu "Choose an action:" 13 50 3 \
+        --menu "Choose an Action:" 13 50 3 \
         "A" "File" \
         "B" "Exiftool (all)" \
         "C" "Binwalk" \
@@ -586,10 +586,10 @@ submenu9() {
     LOCALIP=$(get_first_up_interface_ip)
     exec 3>&1
     selection=$(dialog \
-        --menu "Choose an action for Reverse Shell:" 12 50 3 \
-        "1" "Start reverse shell listener" \
-        "2" "Enhance reverse shell session" \
-        "3" "Popular reverse shell connections" \
+        --menu "Choose an Action for Reverse Shell:" 12 50 3 \
+        "1" "Start Reverse Shell Listener" \
+        "2" "Enhance Reverse Shell Session" \
+        "3" "Popular Reverse Shell Connections" \
         2>&1 1>&3)
 
     case $selection in
@@ -664,8 +664,8 @@ submenu9() {
 submenuA() {
     exec 3>&1
     selection=$(dialog --backtitle "Submenu 1" \
-                       --title "Dictionary selection" \
-                       --menu "Choose one dictionary:" 13 50 5 \
+                       --title "Dictionary Selection" \
+                       --menu "Choose One Dictionary:" 13 50 5 \
                        "1" "None" \
                        "2" "Rockyou.txt" \
                        "3" "10-million-password-list-top-10000.txt" \
@@ -775,15 +775,15 @@ while true; do
         --clear \
         --cancel-label "Exit" \
         --menu "$info" 23 60 12 \
-        "1" "IP search tool" \
-        "2" "Port scan tool" \
-        "3" "HTTP info tool" \
-        "4" "HTTP scanning (DIR)" \
-        "5" "Vulnerability search" \
-        "6" "Cracking services" \
-        "7" "Cracking hash" \
+        "1" "IP Search Tool" \
+        "2" "Port Scan Tool" \
+        "3" "HTTP Info Tool" \
+        "4" "HTTP Scanning (DIR)" \
+        "5" "Vulnerability Search" \
+        "6" "Cracking Services" \
+        "7" "Cracking Hash" \
         "8" "Steg" \
-        "9" "Reverse shell" \
+        "9" "Reverse Shell" \
         "A" "Dictionaries" \
         "B" "Exploits" \
         2>&1 1>&3)
